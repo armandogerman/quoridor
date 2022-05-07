@@ -1,0 +1,9 @@
+Language: python
+python:
+   -"3.8.2-0ubuntu2"
+#command to install dependencies
+install:
+  pip install -r requirenents.txt
+#command to run tests
+script:
+  pytest
