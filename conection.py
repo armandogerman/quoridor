@@ -2,8 +2,8 @@ import asyncio
 import json
 from random import randint
 import sys
-from numpy import append
 import websockets
+
 
 async def send(websocket, action, data):
     message = json.dumps(
