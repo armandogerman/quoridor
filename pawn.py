@@ -16,6 +16,7 @@
 #     }
 # }
 
+
 board="  N     N     N                     S                                                                                                                                                                                                                                             S     S     S  "
 actual_turn="N"
 
@@ -35,50 +36,53 @@ def identify(board,actual_turn):
     while i<=288:
         if board[i] == actual_turn:
             pcs[j]=i
-            j+=1
-            if j>2:
+            if j==2:
                 return pcs
-        i+=1
-        
-def pawnmovedown(board,actual_turn):
-    i=0
-    while i<=288:
-        if board[i] == actual_turn:
-            if board[i+17] == '-':
-                return None            
-            elif board[i+34] == ' ': 
-                return position(i), position(i+34)
-            elif board[i+34] != actual_turn:
-                return position(i), position(i+68)              
+            j+=1
         i+=1
 
-def pawnmoveleft(board,actual_turn):
-    i=0
-    while i<=288:
-        if board[i] == actual_turn:
-            if board[i+1] != '|': 
-                if board[i-2] == ' ':
-                    return position(i), position(i-2)
-        i+=1
+def pawnmovedown(board,actual_turn,pc):
+    i=pc
+    if board[i] == actual_turn:
+        if board[i+17] == '-':
+            return None            
+        elif board[i+34] == ' ': 
+            return position(i), position(i+34)
+        elif board[i+34] != actual_turn:
+            return position(i), position(i+68)              
 
-def pawnmoveright(board,actual_turn):
-    i=0
-    while i<=288:
-        if board[i] == actual_turn:
-            if board[i+1] != '|': 
-                if board[i+2] == ' ':
-                    return position(i), position(i+2)
-        i+=1
+def pawnmoveleft(board,actual_turn,pc):
+    i=pc
+    if board[i] == actual_turn:
+        if board[i+1] != '|': 
+            if board[i-2] == ' ':
+                return position(i), position(i-2)
 
-def pawnmoveup(board,actual_turn):
-    i=0
-    while i<=288:
-        if board[i] == actual_turn:
-            if board[i-17] != '-': 
-                if board[i-36] == ' ':
-                    return position(i), position(i-34)
-        i+=1
+def pawnmoveright(board,actual_turn,pc):
+    i=pc
+    if board[i] == actual_turn:
+        if board[i+1] != '|': 
+            if board[i+2] == ' ':
+                return position(i), position(i+2)
 
+def pawnmoveup(board,actual_turn,pc):
+    i=pc
+    if board[i] == actual_turn:
+        if board[i-17] != '-': 
+            if board[i-36] == ' ':
+                return position(i), position(i-34)
 
+def movepc(board,actual_turn,pc):
+    if actual_turn=="N":
+        if pawnmovedown(board,actual_turn,pc) != None:
+            if pawnmoveleft(board,actual_turn,pc) != None:
+                    if pawnmoveright(board,actual_turn,pc) != None:
+                        return pawnmoveup(board,actual_turn,pc)
+
+def move(request_data):
+    board=request_data['data']['board']
+    actual_turn=request_data['data']['actual_turn']
+    pc=mindist(board,actual_turn)
+    return movepc(board,actual_turn,pc)
 
 # print(identify(board,actual_turn))

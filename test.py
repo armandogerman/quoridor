@@ -31,19 +31,22 @@ class quoridor_pawnmovedown(unittest.TestCase):
     def test_pawnmovedown1(self):
         board = "  N     N     N                                                                                                                                                                                                                                                                   S     S     S  "
         actual_turn = "N"
-        actual = pawnmovedown(board,actual_turn)
+        pc=2
+        actual = pawnmovedown(board,actual_turn,pc)
         esperado = ((0, 2), (2, 2))
         self.assertEqual(actual,esperado)
     def test_pawnmovedown2(self):
         board = "  N     N     N  -*-                                                                                                                                                                                                                                                              S     S     S  "
         actual_turn = "N"
-        actual = pawnmovedown(board,actual_turn)
+        pc=2
+        actual = pawnmovedown(board,actual_turn,pc)
         esperado = None
         self.assertEqual(actual,esperado)   
     def test_pawnmovedown3(self):
         board = "  N     N     N                     S                                                                                                                                                                                                                                             S     S     S  "
         actual_turn = "N"
-        actual = pawnmovedown(board,actual_turn)
+        pc=2
+        actual = pawnmovedown(board,actual_turn,pc)
         esperado = ((0, 2), (4, 2))
         self.assertEqual(actual,esperado)
 
@@ -51,7 +54,8 @@ class quoridor_pawnmoveleft(unittest.TestCase):
     def test_pawnmoveleft1(self):
         board = "  N     N     N                                                                                                                                                                                                                                                                   S     S     S  "
         actual_turn = "N"
-        actual = pawnmoveleft(board,actual_turn)
+        pc=2
+        actual = pawnmoveleft(board,actual_turn,pc)
         esperado = ((0, 2), (0, 0))
         self.assertEqual(actual,esperado)
 
@@ -59,7 +63,8 @@ class quoridor_pawnmoveright(unittest.TestCase):
     def test_pawnmoveright1(self):
         board = "  N     N     N                                                                                                                                                                                                                                                                   S     S     S  "
         actual_turn = "N"
-        actual = pawnmoveright(board,actual_turn)
+        pc=2
+        actual = pawnmoveright(board,actual_turn,pc)
         esperado = ((0, 2), (0, 4))
         self.assertEqual(actual,esperado)
 
@@ -67,7 +72,8 @@ class quoridor_pawnmoveup(unittest.TestCase):
     def test_pawnmoveup1(self):
         board = "  N     N     N                                                                                                                                                                                                                                                                   S     S     S  "
         actual_turn = "S"
-        actual = pawnmoveup(board,actual_turn)
+        pc=274
+        actual = pawnmoveup(board,actual_turn,pc)
         esperado = ((16, 2), (14, 2))
         self.assertEqual(actual,esperado)
 
