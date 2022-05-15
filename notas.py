@@ -7,8 +7,7 @@ token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiYXJtYW5kb2dlcm1hbkBob3R
 
 '''
    0a1b2c3d4e5f6g7h8  
-   _________________  
- 0|   N     N     N   
+ 0|  N     N     N   
  a|
  1|
  b|
@@ -24,13 +23,7 @@ token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiYXJtYW5kb2dlcm1hbkBob3R
  g|
  7|
  h|
- 8|   S     S     S
+ 8|  S     S     S
    ________________
 '''
 
-string="123456789"
-i=8
-
-while i<=0:
-  col=string[i].split()
-  print(col)

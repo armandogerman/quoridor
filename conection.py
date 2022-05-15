@@ -4,7 +4,7 @@ from random import randint
 import sys
 import websockets
 from strategy import *
-
+from wall import *
 
 async def send(websocket, action, data):
     message = json.dumps(
@@ -74,7 +74,7 @@ async def process_move(websocket, request_data):
         # for row in range(9):
         #     print(row,pawn_board[row][0:9])
         # print("   ________________")
-        fromto=strategy(request_data)
+        fromto=move(request_data)
         fr=fromto[0]
         to=fromto[1]
         await send(
@@ -91,15 +91,20 @@ async def process_move(websocket, request_data):
         )
 
 async def process_wall(websocket, request_data):
+    wally=putwall(request_data)
+    row=wally[0]
+    col=wally[1]
+    orientation=wally[2]
+
     await send(
         websocket,
         'wall',
         {
             'game_id': request_data['data']['game_id'],
             'turn_token': request_data['data']['turn_token'],
-            'row': randint(0, 8),
-            'col': randint(0, 8),
-            'orientation': 'h' if randint(0, 1) == 0 else 'v'
+            'row': row,
+            'col': col,
+            'orientation': orientation
         },
     )
 

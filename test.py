@@ -1,5 +1,6 @@
 import unittest
 from pawn import *
+from strategy import *
 
 ##     utility functions    ##
 class quoridor_position(unittest.TestCase):
@@ -70,6 +71,51 @@ class quoridor_pawnmoveup(unittest.TestCase):
         esperado = ((16, 2), (14, 2))
         self.assertEqual(actual,esperado)
 
+class quoridor_distance(unittest.TestCase): 
+    def test_distance1(self):
+        board = "  N     N     N                                                                                                                                                                                                                                                                   S     S     S  "
+        actual_turn = "N"
+        pcs=2
+        actual = distance(board,actual_turn,pcs)
+        esperado = 8
+        self.assertEqual(actual,esperado)
+    def test_distance2(self):
+        board = "  N     N     N                                                                                                          -                                                                                                                                                        S     S     S  "
+        actual_turn = "N"
+        pcs=2
+        actual = distance(board,actual_turn,pcs)
+        esperado = 9
+        self.assertEqual(actual,esperado)
+
+class quoridor_walldown(unittest.TestCase): 
+    def test_walldown1(self):
+        board = "  N     N     N                                                                                                                                                                                                                                                                   S     S     S  "
+        actual_turn = "N"
+        pc=2
+        actual = walldown(board,actual_turn,pc)
+        esperado = 1
+        self.assertEqual(actual,esperado)
+    def test_walldown2(self):
+        board = "  N     N     N                                                                                                                                                                                                                                                                   S     S     S  "
+        actual_turn = "N"
+        pc=240
+        actual = walldown(board,actual_turn,pc)
+        esperado = 1
+        self.assertEqual(actual,esperado)
+
+class quoridor_mindist(unittest.TestCase): 
+    def test_mindist1(self):
+        board = "  N     N     N                                                                                                                                                                                                                                                                   S     S     S  "
+        actual_turn = "N"
+        actual = mindist(board,actual_turn)
+        esperado = 2
+        self.assertEqual(actual,esperado)
+    def test_mindist2(self):
+        board = "  N     N     N                                                                                                          -                                                                                                                                                        S     S     S  "
+        actual_turn = "N"
+        actual = mindist(board,actual_turn)
+        esperado = 8
+        self.assertEqual(actual,esperado)
 
 if __name__ == "__main__":
     unittest.main()

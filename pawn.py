@@ -16,8 +16,6 @@
 #     }
 # }
 
-
-
 board="  N     N     N                     S                                                                                                                                                                                                                                             S     S     S  "
 actual_turn="N"
 
@@ -26,6 +24,9 @@ def position(i):                #this function transform the chessboard and retu
         col = i-(j*17)
         if col<17 and col>=0:
             return j,col
+
+def index(j,col):                #this function transform the chessboard and returns (x,y) coordinates
+    return j*17+col
 
 def identify(board,actual_turn):
     i=0
@@ -39,7 +40,6 @@ def identify(board,actual_turn):
                 return pcs
         i+=1
         
-
 def pawnmovedown(board,actual_turn):
     i=0
     while i<=288:
@@ -80,4 +80,5 @@ def pawnmoveup(board,actual_turn):
         i+=1
 
 
-print(identify(board,actual_turn))
+
+# print(identify(board,actual_turn))
