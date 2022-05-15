@@ -3,6 +3,7 @@ import json
 from random import randint
 import sys
 import websockets
+from strategy import *
 
 
 async def send(websocket, action, data):
@@ -68,35 +69,26 @@ async def process_your_turn(websocket, request_data):
 
 
 async def process_move(websocket, request_data):
-        side = request_data['data']['side']
-        pawn_board = [[None for _ in range(9)] for _ in range(9)]
-        for row in range(9):
-            for col in range(9):
-                string_row = request_data['data']['board'][17*(row*2): 17*(row*2) + 17]
-                pawn_board[row][col] = string_row[col * 2]
-        for row in range(9):
-            for col in range(9):
-                if pawn_board[row][col] == side:
-                    from_row = row
-                    from_col = col
-                    to_col = col
-                    break
-        to_row = from_row + (1 if side == 'N' else -1)
-        if pawn_board[to_row][from_col] != ' ':
-            to_row = to_row + (1 if side == 'N' else -1)
+        # print("************************")
+        # print('    0    1    2    3    4    5    6    7    8')
+        # for row in range(9):
+        #     print(row,pawn_board[row][0:9])
+        # print("   ________________")
+        fromto=strategy(request_data)
+        fr=fromto[0]
+        to=fromto[1]
         await send(
             websocket,
             'move',
             {
                 'game_id': request_data['data']['game_id'],
                 'turn_token': request_data['data']['turn_token'],
-                'from_row': from_row,
-                'from_col': from_col,
-                'to_row': to_row,
-                'to_col': to_col,
+                'from_row': fr[0],
+                'from_col': fr[1],
+                'to_row': to[0],
+                'to_col': to[1],
             },
         )
-
 
 async def process_wall(websocket, request_data):
     await send(
@@ -110,7 +102,6 @@ async def process_wall(websocket, request_data):
             'orientation': 'h' if randint(0, 1) == 0 else 'v'
         },
     )
-
 
 if __name__ == '__main__':
     if len(sys.argv) >= 2:
