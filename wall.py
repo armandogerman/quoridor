@@ -13,11 +13,17 @@
 # print(walldown(board,actual_turn,pc))
 
 from random import randint
+
 def putwall(request_data):
     return(randint(0, 8),randint(0, 8),'h' if randint(0, 1) == 0 else 'v')
 
-def walldown(board,actual_turn,pc):
-    if board[pc+17]=="-":
+def walldown(request_data,pc):
+    if pc+17>271:
         return None
-    elif board[pc+17]==" ":
+    elif request_data['data']['board'][pc+17]=="-":
+        return None
+    elif request_data['data']['board'][pc+17]==" ":
         return 1
+
+
+

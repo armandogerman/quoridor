@@ -29,60 +29,55 @@ def position(i):                #this function transform the chessboard and retu
 def index(j,col):                #this function transform the chessboard and returns (x,y) coordinates
     return j*17+col
 
-def identify(board,actual_turn):
+def identify(request_data):
     i=0
     j=0
     pcs=[0,0,0]
     while i<=288:
-        if board[i] == actual_turn:
+        if request_data['data']['board'][i] == request_data['data']['side']:
             pcs[j]=i
             if j==2:
                 return pcs
             j+=1
         i+=1
 
-def pawnmovedown(board,actual_turn,pc):
-    i=pc
-    if board[i] == actual_turn:
-        if board[i+17] == '-':
+def pawnmovedown(request_data,pc):
+    if request_data['data']['board'][pc] == request_data['data']['side']:
+        if request_data['data']['board'][pc+17] == '-':
             return None            
-        elif board[i+34] == ' ': 
-            return position(i), position(i+34)
-        elif board[i+34] != actual_turn:
-            return position(i), position(i+68)              
+        elif request_data['data']['board'][pc+34] == ' ': 
+            return position(pc), position(pc+34)
+        elif request_data['data']['board'][pc+34] != actual_turn:
+            return position(pc), position(pc+68)              
 
-def pawnmoveleft(board,actual_turn,pc):
-    i=pc
-    if board[i] == actual_turn:
-        if board[i+1] != '|': 
-            if board[i-2] == ' ':
-                return position(i), position(i-2)
+def pawnmoveleft(request_data,pc):
+    if request_data['data']['board'][pc] == request_data['data']['side']:
+        if request_data['data']['board'][pc+1] != '|': 
+            if request_data['data']['board'][pc-2] == ' ':
+                return position(pc), position(pc-2)
 
-def pawnmoveright(board,actual_turn,pc):
-    i=pc
-    if board[i] == actual_turn:
-        if board[i+1] != '|': 
-            if board[i+2] == ' ':
-                return position(i), position(i+2)
+def pawnmoveright(request_data,pc):
+    if request_data['data']['board'][pc] == request_data['data']['side']:
+        if request_data['data']['board'][pc+1] != '|': 
+            if request_data['data']['board'][pc+2] == ' ':
+                return position(pc), position(pc+2)
 
-def pawnmoveup(board,actual_turn,pc):
-    i=pc
-    if board[i] == actual_turn:
-        if board[i-17] != '-': 
-            if board[i-36] == ' ':
-                return position(i), position(i-34)
+def pawnmoveup(request_data,pc):
+    if request_data['data']['board'][pc] == request_data['data']['side']:
+        if request_data['data']['board'][pc-17] != '-': 
+            if request_data['data']['board'][pc-34] == ' ':
+                return position(pc), position(pc-34)
 
-def movepc(board,actual_turn,pc):
-    if actual_turn=="N":
-        if pawnmovedown(board,actual_turn,pc) != None:
-            if pawnmoveleft(board,actual_turn,pc) != None:
-                    if pawnmoveright(board,actual_turn,pc) != None:
-                        return pawnmoveup(board,actual_turn,pc)
+def movepc(request_data,pc):
+    if request_data['data']['side']=="N":
+        if pawnmovedown(request_data,pc) != None:
+            return pawnmovedown(request_data,pc)
+        elif pawnmoveleft(request_data,pc) != None:
+            return pawnmoveleft(request_data,pc)
+        elif pawnmoveright(request_data,pc) != None:
+            return pawnmoveright(request_data,pc)
+        elif pawnmoveup(request_data,pc) !=None:
+            return pawnmoveup(request_data,pc)
 
-def move(request_data):
-    board=request_data['data']['board']
-    actual_turn=request_data['data']['actual_turn']
-    pc=mindist(board,actual_turn)
-    return movepc(board,actual_turn,pc)
 
 # print(identify(board,actual_turn))

@@ -1,36 +1,16 @@
 from pawn import *
 from wall import *
-# def strategy(request_data):
-#     if select_pawn(request_data) != None:
-#         print("select_pawn")
-#         return select_pawn(board,actual_turn)
-board="  N     N     N                                                                                                         -                                                                                                                                                         S     S     S  "
-actual_turn="N"
-pcs=2
-request_data={"event": "your_turn", "data": {"walls": 9.0, "score_1": -47.0, "score_2": 126.0, "side": "N", "remaining_moves": 188.0, "player_2": "agustin1997aguero@gmail.com", "player_1": "armandogerman@hotmail.com", "board": "  N     N     N                               |                *       S        |                        S     S  ", "turn_token": "783f585d-22b5-4b72-92ab-81ba238a7f0e", "game_id": "d99b9ab6-d485-11ec-aef0-7ecdf393f9cc"}}
-                        
-def distance(board,actual_turn,pcs):
-    if actual_turn=="N":
+
+def distance(request_data,pcs):
+    if request_data['data']['side']=="N":
         acu=0
         while pcs<=254:
-            if walldown(board,actual_turn,pcs)==1:
+            if walldown(request_data,pcs)==1:
                 acu+=1
-            elif walldown(board,actual_turn,pcs)==None:
+            elif walldown(request_data,pcs)==None:
                 acu+=2
             pcs=pcs+34
         return acu
-            
-def mindist(board,actual_turn):
-    pcs=identify(board,actual_turn)
-    a=distance(board,actual_turn,pcs[0])
-    b=distance(board,actual_turn,pcs[1])
-    c=distance(board,actual_turn,pcs[2])
-    if a<=b and a<=c:
-        return pcs[0]
-    elif b<=a and b<=c:
-        return pcs[1]
-    elif c<=a and c<=b:
-        return pcs[2]
 
 def prt(request_data):
     board=request_data['data']['board']
@@ -43,7 +23,7 @@ def prt(request_data):
     p1=request_data['data']['player_1']
     sc1=request_data['data']['score_1']
     wa1=int(request_data['data']['walls'])
-    print("************************")
+    print("---------------------------------------------------------------------")
     print(
         "    0a1b2c3d4e5f6g7h8\n",
         '0|',board[0:16],'      | Player1:',p1,'\n',
@@ -63,9 +43,26 @@ def prt(request_data):
         '7|',board[238:254],'\n',
         'h|',board[255:271],'\n',
         '8|',board[272:288])
-    print("************************************************")
+    print("---------------------------------------------------------------------")
     print("turn_token",turn_token)
     print("game_id",game_id)
-    print("************************************************")
+    print("---------------------------------------------------------------------")
 
-# print(imprimir(request_data))
+def mindist(request_data):
+    pcs=identify(request_data)
+    a=distance(request_data,pcs[0])
+    b=distance(request_data,pcs[1])
+    c=distance(request_data,pcs[2])
+    if a<=b and a<=c:
+        return pcs[0]
+    elif b<=a and b<=c:
+        return pcs[1]
+    elif c<=a and c<=b:
+        return pcs[2]
+
+def move(request_data):
+    pc=mindist(request_data)
+    fromto=movepc(request_data,pc)
+    print("** From: ",fromto[0],"-> To:",fromto[1]," **")
+    return fromto
+

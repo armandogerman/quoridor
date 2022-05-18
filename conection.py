@@ -70,12 +70,8 @@ async def process_your_turn(websocket, request_data):
 
 
 async def process_move(websocket, request_data):
-        print("************************")
-        print('    0    1    2    3    4    5    6    7    8')
-        for row in range(9):
-            print(row,pawn_board[row][0:9])
-        print("   ________________")
         fromto=move(request_data)
+        prt(request_data,fromto)
         fr=fromto[0]
         to=fromto[1]
         await send(
