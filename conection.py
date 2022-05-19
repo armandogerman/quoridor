@@ -63,6 +63,7 @@ async def play(websocket):
 
 
 async def process_your_turn(websocket, request_data):
+    prt(request_data)
     if randint(0, 4) >= 1:
         await process_move(websocket, request_data)
     else:
@@ -71,7 +72,6 @@ async def process_your_turn(websocket, request_data):
 
 async def process_move(websocket, request_data):
         fromto=move(request_data)
-        prt(request_data,fromto)
         fr=fromto[0]
         to=fromto[1]
         await send(
