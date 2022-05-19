@@ -43,18 +43,13 @@ class quoridor_pawnmovedown(unittest.TestCase):
         actual = pawnmovedown(request_data,pc)
         esperado = ((0, 1), (1, 1))
         self.assertEqual(actual,esperado)
-    # def test_pawnmovedown2(self):
-    #     request_data={"event": "your_turn", "data": {"walls": 10.0, "score_1": 0.0, "remaining_moves": 200.0, "player_1": "armandogerman@hotmail.com", "side": "N", "score_2": 0.0, "board": "  N     N     N  -*-                                                                                                                                                                                                                                                              S     S     S  ", "player_2": "armandogerman@hotmail.com", "turn_token": "59ac08e3-bdf9-4787-82ed-b9b49b304a9e", "game_id": "eb6b710a-d695-11ec-aef0-7ecdf393f9cc"}}
-    #     pc=2
-    #     actual = pawnmovedown(request_data,pc)
-    #     esperado = None
-    #     self.assertEqual(actual,esperado)   
-    # def test_pawnmovedown3(self):
-    #     request_data={"event": "your_turn", "data": {"walls": 10.0, "score_1": 0.0, "remaining_moves": 200.0, "player_1": "armandogerman@hotmail.com", "side": "N", "score_2": 0.0, "board": "  N     N     N                     S                                                                                                                                                                                                                                             S     S     S  ", "player_2": "armandogerman@hotmail.com", "turn_token": "59ac08e3-bdf9-4787-82ed-b9b49b304a9e", "game_id": "eb6b710a-d695-11ec-aef0-7ecdf393f9cc"}}
-    #     pc=2
-    #     actual = pawnmovedown(request_data,pc)
-    #     esperado = ((0, 1), (2, 1))
-    #     self.assertEqual(actual,esperado)
+    def test_pawnmovedown2(self):
+        request_data={"event": "your_turn", "data": {"walls": 10.0, "score_1": 0.0, "remaining_moves": 200.0, "player_1": "armandogerman@hotmail.com", "side": "N", "score_2": 0.0, "board": "  N     N     N                     S                                                                                                                                                                                                                                             S     S     S  ", "player_2": "armandogerman@hotmail.com", "turn_token": "59ac08e3-bdf9-4787-82ed-b9b49b304a9e", "game_id": "eb6b710a-d695-11ec-aef0-7ecdf393f9cc"}}
+        pc=2
+        prt(request_data)
+        actual = pawnmovedown(request_data,pc)
+        esperado = ((0, 1), (2, 1))
+        self.assertEqual(actual,esperado)
 class quoridor_pawnmoveleft(unittest.TestCase):    
     def test_pawnmoveleft1(self):
         request_data={"event": "your_turn", "data": {"walls": 10.0, "score_1": 0.0, "remaining_moves": 200.0, "player_1": "armandogerman@hotmail.com", "side": "N", "score_2": 0.0, "board": "  N     N     N                                                                                                                                                                                                                                                                   S     S     S  ", "player_2": "armandogerman@hotmail.com", "turn_token": "59ac08e3-bdf9-4787-82ed-b9b49b304a9e", "game_id": "eb6b710a-d695-11ec-aef0-7ecdf393f9cc"}}
@@ -109,10 +104,11 @@ class quoridor_move(unittest.TestCase):
         actual = move(request_data)
         esperado = (0,1),(1,1)
         self.assertEqual(actual,esperado)
-    # def test_move2(self):
-    #     request_data={"event": "your_turn", "data": {"walls": 10.0, "score_2": 0.0, "score_1": -10.0, "remaining_moves": 199.0, "side": "S", "player_1": "armandogerman@hotmail.com", "board": "  N     N     N                                                                                                                                                                                                                                                                 S     S     S  ", "player_2": "armandogerman@hotmail.com", "turn_token": "5da3c090-2e84-4672-a656-6adad2d322bc", "game_id": "d00c0ae8-d6ca-11ec-aef0-7ecdf393f9cc"}}
-    #     actual = move(request_data)
-    #     esperado = (0,2),(2,2)
-    #     self.assertEqual(actual,esperado)
+    def test_move1(self):
+        request_data={"event": "your_turn", "data": {"player_2": "armandogerman@hotmail.com", "board": "        N     N                     N                                                                      |                *                |                                                                                                                           S     S     S  ", "walls": 9.0, "score_2": 3.0, "side": "S", "player_1": "armandogerman@hotmail.com", "remaining_moves": 197.0, "score_1": -8.0, "turn_token": "cf6df257-c4b4-4102-a08b-d8ab06572529", "game_id": "c20239da-d716-11ec-aef0-7ecdf393f9cc"}}
+        actual = move(request_data)
+        esperado = (0,1),(1,1)
+        self.assertEqual(actual,esperado)
+
 if __name__ == "__main__":
     unittest.main()

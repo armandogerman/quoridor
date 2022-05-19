@@ -1,3 +1,4 @@
+from re import A
 from pawn import *
 from wall import *
 
@@ -11,7 +12,15 @@ def distance(request_data,pcs):
                 acu+=2
             pcs=pcs+34
         return acu
-
+    if request_data['data']['side']=="S":
+        acu=0
+        while pcs<=254:
+            if walldown(request_data,pcs)==1:
+                acu+=1
+            elif walldown(request_data,pcs)==2:
+                acu+=2
+            pcs=pcs-34
+        return acu
 def prt(request_data):
     board=request_data['data']['board']
     p2=request_data['data']['player_2']
@@ -47,7 +56,6 @@ def prt(request_data):
     print("turn_token",turn_token)
     print("game_id",game_id)
     print("---------------------------------------------------------------------")
-
 def mindist(request_data):
     i=0
     j=0
@@ -61,22 +69,22 @@ def mindist(request_data):
                 break
             j+=1
         i+=1
-    if pcs[0]<=pcs[1]:
-        if pcs[0]<=pcs[2]:
-            return pci[0]
-        elif pcs[0]>pcs[2]:
-            return pci[2]
-    elif pcs[0]>pcs[1]:
-        if pcs[1]<=pcs[2]:
-            return pci[1]
-        elif pcs[1]>pcs[2]:
-            return pci[2]
-
+    print("mindist -> pcs",pcs,"pci",pci)
+    print(request_data['data']['board'][i],"lalalala",request_data['data']['side'])
+    a=str(pcs[0])
+    b=str(pcs[1])
+    c=str(pcs[2])
+    if a<=b:
+        if a<=c:
+            return a
+        elif a>c:
+            return c
+    elif b<=c:
+            return b
+    elif b>c:
+        return c
 def move(request_data):
     pc=mindist(request_data)
     fromto=movepc(request_data,pc)
-    print("** From: ",fromto[0],"-> To:",fromto[1]," **")
+    print("************ FROM: ",fromto[0],"-> TO:",fromto[1]," **************")
     return fromto
-
-# request_data={"event": "your_turn", "data": {"walls": 10.0, "score_1": 0.0, "remaining_moves": 200.0, "player_1": "armandogerman@hotmail.com", "side": "N", "score_2": 0.0, "board": "  N     N     N                                                                                                                                                                                                                                                                   S     S     S  ", "player_2": "armandogerman@hotmail.com", "turn_token": "59ac08e3-bdf9-4787-82ed-b9b49b304a9e", "game_id": "eb6b710a-d695-11ec-aef0-7ecdf393f9cc"}}
-# print(mindist(request_data))
