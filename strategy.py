@@ -1,4 +1,3 @@
-from re import A
 from pawn import *
 from wall import *
 
@@ -14,10 +13,10 @@ def distance(request_data,pcs):
         return acu
     if request_data['data']['side']=="S":
         acu=0
-        while pcs<=254:
-            if walldown(request_data,pcs)==1:
+        while pcs>34:
+            if wallup(request_data,pcs)==1:
                 acu+=1
-            elif walldown(request_data,pcs)==2:
+            elif wallup(request_data,pcs)==2:
                 acu+=2
             pcs=pcs-34
         return acu
@@ -56,7 +55,7 @@ def prt(request_data):
     print("turn_token",turn_token)
     print("game_id",game_id)
     print("---------------------------------------------------------------------")
-def mindist(request_data):
+def mindist(request_data): # dice cual pieza tiene el camino mas corto desde donde estan
     i=0
     j=0
     pcs=[0,0,0]
@@ -69,22 +68,20 @@ def mindist(request_data):
                 break
             j+=1
         i+=1
-    print("mindist -> pcs",pcs,"pci",pci)
-    print(request_data['data']['board'][i],"lalalala",request_data['data']['side'])
-    a=str(pcs[0])
-    b=str(pcs[1])
-    c=str(pcs[2])
+    a=int(pcs[0])
+    b=int(pcs[1])
+    c=int(pcs[2])
     if a<=b:
         if a<=c:
-            return a
+            return pci[0]
         elif a>c:
-            return c
+            return pci[2]
     elif b<=c:
-            return b
+        return pci[1]
     elif b>c:
-        return c
+        return pci[2]
 def move(request_data):
     pc=mindist(request_data)
     fromto=movepc(request_data,pc)
-    print("************ FROM: ",fromto[0],"-> TO:",fromto[1]," **************")
     return fromto
+
