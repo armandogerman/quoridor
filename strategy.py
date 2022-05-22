@@ -1,4 +1,5 @@
 from pawn import *
+from pawn import position
 from wall import *
 
 def distance(request_data,pcs):
@@ -55,7 +56,7 @@ def prt(request_data):
     print("turn_token",turn_token)
     print("game_id",game_id)
     print("---------------------------------------------------------------------")
-def mindist(request_data): # dice cual pieza tiene el camino mas corto desde donde estan
+def mindist(request_data): # dice cual pieza ALIADA tiene el camino mas corto desde donde estan
     i=0
     j=0
     pcs=[0,0,0]
@@ -68,18 +69,42 @@ def mindist(request_data): # dice cual pieza tiene el camino mas corto desde don
                 break
             j+=1
         i+=1
-    a=int(pcs[0])
-    b=int(pcs[1])
-    c=int(pcs[2])
-    if a<=b:
-        if a<=c:
-            return pci[0]
-        elif a>c:
-            return pci[2]
-    elif b<=c:
+    if pcs[0]<=pcs[1] and pcs[0]<=pcs[2]:
+        return pci[0]
+    elif pcs[1]<=pcs[0] and pcs[1]<=pcs[2]:
         return pci[1]
-    elif b>c:
+    elif pcs[2]<=pcs[0] and pcs[2]<=pcs[1]:
         return pci[2]
+def mindistop(request_data): # dice cual pieza ENEMIGA tiene el camino mas corto desde donde estan
+    i=0
+    j=0
+    pcs=[0,0,0]
+    pci=[0,0,0]
+    while i<=288:
+        if request_data['data']['board'][i] != request_data['data']['side']:
+            pcs[j]=distance(request_data,i)
+            pci[j]=i
+            if j==2:
+                break
+            j+=1
+        i+=1
+    if pcs[0]<=pcs[1] and pcs[0]<=pcs[2]:
+        return pci[0]
+    elif pcs[1]<=pcs[0] and pcs[1]<=pcs[2]:
+        return pci[1]
+    elif pcs[2]<=pcs[0] and pcs[2]<=pcs[1]:
+        return pci[2]
+def wallstop(request_data):
+    enemy=mindinstop(request_data)
+    positionenemy=position(enemy)
+    if request_data['data']['side']=="S":
+        positionenemy[0]=positionenemy[0]-1
+        positionenemy.append(h)
+        return positionenemy
+    if request_data['data']['side']=="N":
+        positionenemy[0]=positionenemy[0]+1
+        positionenemy.append(h)
+        return positionenemy
 def move(request_data):
     pc=mindist(request_data)
     fromto=movepc(request_data,pc)
