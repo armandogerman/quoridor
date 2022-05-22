@@ -101,7 +101,7 @@ class quoridor_walldown(unittest.TestCase):
         esperado = 1
         self.assertEqual(actual,esperado)
 # class quoridor_putwall(unittest.TestCase): esta en modo random.
-class quoridor_walldown(unittest.TestCase): 
+class quoridor_stop(unittest.TestCase): 
     def test_stop(self):
         request_data={"event": "your_turn", "data": {"walls": 10.0, "score_1": 0.0, "remaining_moves": 200.0, "player_1": "armandogerman@hotmail.com", "side": "S", "score_2": 0.0, "board": "  N     N     N                                                                                                                                                                                                                                                                   S     S     S  ", "player_2": "armandogerman@hotmail.com", "turn_token": "59ac08e3-bdf9-4787-82ed-b9b49b304a9e", "game_id": "eb6b710a-d695-11ec-aef0-7ecdf393f9cc"}}
         actual = wallstop(request_data)
@@ -159,6 +159,12 @@ class quoridor_move(unittest.TestCase):
         request_data={"event": "your_turn", "data": {"player_1": "armandogerman@hotmail.com", "score_1": -28.0, "walls": 10.0, "side": "S", "score_2": 30.0, "board": "  N           N                           N                                                                                                           S                                                                                                                           S     S        ", "remaining_moves": 192.0, "player_2": "lucas.a.cardone@gmail.com", "turn_token": "dd4c5f30-1728-422b-8590-6b30d9ac4dd7", "game_id": "217c0f10-d7b9-11ec-aef0-7ecdf393f9cc"}}
         actual = move(request_data)
         esperado = (4,7),(3,7)
+        self.assertEqual(actual,esperado)
+class quoridor_mindistop(unittest.TestCase): 
+    def test_mindistop1(self):
+        request_data={"event": "your_turn", "data": {"walls": 10.0, "score_1": 0.0, "remaining_moves": 200.0, "player_1": "armandogerman@hotmail.com", "side": "N", "score_2": 0.0, "board": "  N     N     N                                                                                                                                                                                                                                                                   S     S     S  ", "player_2": "armandogerman@hotmail.com", "turn_token": "59ac08e3-bdf9-4787-82ed-b9b49b304a9e", "game_id": "eb6b710a-d695-11ec-aef0-7ecdf393f9cc"}}
+        actual = mindistop(request_data)
+        esperado = 274
         self.assertEqual(actual,esperado)
 if __name__ == "__main__":
     unittest.main()

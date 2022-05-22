@@ -74,23 +74,23 @@ def mindist(request_data): # dice cual pieza ALIADA tiene el camino mas corto de
         return pci[1]
     elif pcs[2]<=pcs[0] and pcs[2]<=pcs[1]:
         return pci[2]
-def move(request_data):
-    pc=mindist(request_data)
-    fromto=movepc(request_data,pc)
-    return fromto
 def mindistop(request_data): # dice cual pieza ENEMIGA tiene el camino mas corto desde donde estan
     i=0
     j=0
     pcs=[0,0,0]
     pci=[0,0,0]
+    op="N"
+    if request_data['data']['side'] == "N":
+        op="S"
     while i<=288:
-        if request_data['data']['board'][i] != request_data['data']['side']:
+        if request_data['data']['board'][i] == op:
             pcs[j]=distance(request_data,i)
             pci[j]=i
             if j==2:
                 break
             j+=1
         i+=1
+    print("ministop",op,pcs,pci)
     if pcs[0]<=pcs[1] and pcs[0]<=pcs[2]:
         return pci[0]
     elif pcs[1]<=pcs[0] and pcs[1]<=pcs[2]:
@@ -106,3 +106,37 @@ def wallstop(request_data):
         return (a-1,b,"h")
     if request_data['data']['side']=="N":
         return (a+1,b,"h")
+def movepc(request_data,pc):
+    if request_data['data']['side']=="N":
+        if pawnmovedown(request_data,pc) != None:
+            print("pawnmovedown N",pawnmovedown(request_data,pc))
+            return pawnmovedown(request_data,pc)
+        elif pawnmoveleft(request_data,pc) != None:
+            print("pawnmoveleft N",pawnmoveleft(request_data,pc))
+            return pawnmoveleft(request_data,pc)
+        elif pawnmoveright(request_data,pc) != None:
+            print("pawnmoveright N",pawnmoveright(request_data,pc))
+            return pawnmoveright(request_data,pc)
+        elif pawnmoveup(request_data,pc) !=None:
+            print("pawnmoveup N",pawnmoveup(request_data,pc))
+            return pawnmoveup(request_data,pc)
+    if request_data['data']['side']=="S":
+        if pawnmoveup(request_data,pc) !=None:
+            print("pawnmoveup S",pawnmoveup(request_data,pc))
+            return pawnmoveup(request_data,pc)
+        elif pawnmoveleft(request_data,pc) != None:
+            print("pawnmoveleft S",pawnmoveleft(request_data,pc))
+            return pawnmoveleft(request_data,pc)
+        elif pawnmoveright(request_data,pc) != None:
+            print("pawnmoveright",pawnmoveright(request_data,pc))
+            return pawnmoveright(request_data,pc)
+        elif pawnmoveup(request_data,pc) !=None:
+            print("pawnmoveup S",pawnmoveup(request_data,pc))
+            return pawnmoveup(request_data,pc)
+        elif pawnmovedown(request_data,pc) != None:
+            print("pawnmovedown S",pawnmovedown(request_data,pc))
+            return pawnmovedown(request_data,pc)
+def move(request_data):
+    pc=mindist(request_data)
+    fromto=movepc(request_data,pc)
+    return fromto
