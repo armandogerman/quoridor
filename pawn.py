@@ -1,11 +1,3 @@
-# def position(i):
-#     for j in range(17):
-#         col = i-(j*17*2)
-#         if col<17 and col>=0:
-#             if col>8:
-#                 return j,col-8
-#         if col<=8:
-#             return j,int(col/2)
 def position(i):
   for j in range(17):
     col = i-(j*34)

@@ -101,6 +101,12 @@ class quoridor_walldown(unittest.TestCase):
         esperado = 1
         self.assertEqual(actual,esperado)
 # class quoridor_putwall(unittest.TestCase): esta en modo random.
+class quoridor_walldown(unittest.TestCase): 
+    def test_stop(self):
+        request_data={"event": "your_turn", "data": {"walls": 10.0, "score_1": 0.0, "remaining_moves": 200.0, "player_1": "armandogerman@hotmail.com", "side": "S", "score_2": 0.0, "board": "  N     N     N                                                                                                                                                                                                                                                                   S     S     S  ", "player_2": "armandogerman@hotmail.com", "turn_token": "59ac08e3-bdf9-4787-82ed-b9b49b304a9e", "game_id": "eb6b710a-d695-11ec-aef0-7ecdf393f9cc"}}
+        actual = wallstop(request_data)
+        esperado = (7,1,"h")
+        self.assertEqual(actual,esperado)
 # strategy *************************************************
 class quoridor_mindist(unittest.TestCase): 
     def test_mindist1(self):

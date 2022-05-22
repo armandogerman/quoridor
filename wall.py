@@ -1,6 +1,4 @@
 from random import randint
-from strategy import *
-from strategy import wallstop
 
 def putwall(request_data):
     return wallstop(request_data)
@@ -33,5 +31,3 @@ def wallup(request_data,pc):
 #         return 2
 #     elif request_data['data']['board'][pc+1]==" ":
 #         return 1
-
-

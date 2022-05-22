@@ -1,5 +1,4 @@
 from pawn import *
-from pawn import position
 from wall import *
 
 def distance(request_data,pcs):
@@ -75,6 +74,10 @@ def mindist(request_data): # dice cual pieza ALIADA tiene el camino mas corto de
         return pci[1]
     elif pcs[2]<=pcs[0] and pcs[2]<=pcs[1]:
         return pci[2]
+def move(request_data):
+    pc=mindist(request_data)
+    fromto=movepc(request_data,pc)
+    return fromto
 def mindistop(request_data): # dice cual pieza ENEMIGA tiene el camino mas corto desde donde estan
     i=0
     j=0
@@ -95,18 +98,11 @@ def mindistop(request_data): # dice cual pieza ENEMIGA tiene el camino mas corto
     elif pcs[2]<=pcs[0] and pcs[2]<=pcs[1]:
         return pci[2]
 def wallstop(request_data):
-    enemy=mindinstop(request_data)
+    enemy=mindistop(request_data)
     positionenemy=position(enemy)
+    a=int(positionenemy[0])
+    b=int(positionenemy[1])
     if request_data['data']['side']=="S":
-        positionenemy[0]=positionenemy[0]-1
-        positionenemy.append(h)
-        return positionenemy
+        return (a-1,b,"h")
     if request_data['data']['side']=="N":
-        positionenemy[0]=positionenemy[0]+1
-        positionenemy.append(h)
-        return positionenemy
-def move(request_data):
-    pc=mindist(request_data)
-    fromto=movepc(request_data,pc)
-    return fromto
-
+        return (a+1,b,"h")
