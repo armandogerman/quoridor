@@ -9,8 +9,8 @@ def position(i):
         elif col>0:
           col-=2
           acu+=1
-def index(j,col):
-    return j*17+col
+# def index(j,col):
+#     return j*17+col
 def pawnmovedown(request_data,pc):
     if request_data['data']['board'][pc+17] == '-':
         return None            
@@ -72,3 +72,6 @@ def movepc(request_data,pc):
             print("pawnmovedown S",pawnmovedown(request_data,pc))
             return pawnmovedown(request_data,pc)
 
+# for i in range(17):
+#     for j in range(17):
+#         print("index",index(i,j),"i",i,"j",j)

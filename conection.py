@@ -64,10 +64,13 @@ async def play(websocket):
 
 async def process_your_turn(websocket, request_data):
     prt(request_data)
-    if randint(0, 4) >= 1:
-        await process_move(websocket, request_data)
+    if request_data["data"]["walls"]>0:
+        if randint(0, 4) >= 3:
+            await process_move(websocket, request_data)
+        else:
+            await process_wall(websocket, request_data)
     else:
-        await process_wall(websocket, request_data)
+        await process_move(websocket, request_data)
 
 
 async def process_move(websocket, request_data):

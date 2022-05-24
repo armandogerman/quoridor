@@ -101,9 +101,21 @@ class quoridor_walldown(unittest.TestCase):
         esperado = 1
         self.assertEqual(actual,esperado)
 # class quoridor_putwall(unittest.TestCase): esta en modo random.
-class quoridor_stop(unittest.TestCase): 
-    def test_stop(self):
+class quoridor_wallstop(unittest.TestCase): 
+    def test_wallstop1(self):
         request_data={"event": "your_turn", "data": {"walls": 10.0, "score_1": 0.0, "remaining_moves": 200.0, "player_1": "armandogerman@hotmail.com", "side": "S", "score_2": 0.0, "board": "  N     N     N                                                                                                                                                                                                                                                                   S     S     S  ", "player_2": "armandogerman@hotmail.com", "turn_token": "59ac08e3-bdf9-4787-82ed-b9b49b304a9e", "game_id": "eb6b710a-d695-11ec-aef0-7ecdf393f9cc"}}
+        actual = wallstop(request_data)
+        esperado = (1,1,"h")
+        self.assertEqual(actual,esperado)
+class quoridor_wallstop(unittest.TestCase): 
+    def test_wallstop2(self):
+        request_data={"event": "your_turn", "data": {"walls": 10.0, "score_1": 0.0, "remaining_moves": 200.0, "player_1": "armandogerman@hotmail.com", "side": "N", "score_2": 0.0, "board": "  N     N     N                                                                                                                                                                                                                                                                   S     S     S  ", "player_2": "armandogerman@hotmail.com", "turn_token": "59ac08e3-bdf9-4787-82ed-b9b49b304a9e", "game_id": "eb6b710a-d695-11ec-aef0-7ecdf393f9cc"}}
+        actual = wallstop(request_data)
+        esperado = (7,1,"h")
+        self.assertEqual(actual,esperado)
+class quoridor_wallstop(unittest.TestCase): 
+    def test_wallstop3(self):
+        request_data={"event": "your_turn", "data": {"walls": 9.0, "side": "N", "score_2": -50.0, "score_1": -25.0, "board": "  N           N                           N                                                                                                                          -*-                                                                                                          S     S     S  ", "remaining_moves": 190.0, "player_2": "dani.fredrikson@gmail.com", "player_1": "armandogerman@hotmail.com", "turn_token": "65d2a9de-e739-43b3-9006-b13e20328b80", "game_id": "05053532-d7d2-11ec-aef0-7ecdf393f9cc"}}
         actual = wallstop(request_data)
         esperado = (7,1,"h")
         self.assertEqual(actual,esperado)
@@ -159,6 +171,16 @@ class quoridor_move(unittest.TestCase):
         request_data={"event": "your_turn", "data": {"player_1": "armandogerman@hotmail.com", "score_1": -28.0, "walls": 10.0, "side": "S", "score_2": 30.0, "board": "  N           N                           N                                                                                                           S                                                                                                                           S     S        ", "remaining_moves": 192.0, "player_2": "lucas.a.cardone@gmail.com", "turn_token": "dd4c5f30-1728-422b-8590-6b30d9ac4dd7", "game_id": "217c0f10-d7b9-11ec-aef0-7ecdf393f9cc"}}
         actual = move(request_data)
         esperado = (4,7),(3,7)
+        self.assertEqual(actual,esperado)
+    def test_move9(self):
+        request_data={"event": "your_turn", "data": {"walls": 9.0, "side": "N", "score_2": -50.0, "score_1": -25.0, "board": "  N           N                           N                                                                                                                          -*-                                                                                                          S     S     S  ", "remaining_moves": 190.0, "player_2": "dani.fredrikson@gmail.com", "player_1": "armandogerman@hotmail.com", "turn_token": "65d2a9de-e739-43b3-9006-b13e20328b80", "game_id": "05053532-d7d2-11ec-aef0-7ecdf393f9cc"}}
+        actual = move(request_data)
+        esperado = (1,4),(2,4)
+        self.assertEqual(actual,esperado)
+    def test_move10(self):
+        request_data={"event": "your_turn", "data": {"remaining_moves": 164.0, "score_1": -19.0, "player_1": "armandogerman@hotmail.com", "score_2": -45.0, "side": "N", "player_2": "armandogerman@hotmail.com", "walls": 7.0, "board": "         N     N                            |         -*- -*-*                | |                *-*-       |     |       -*-*                |   |                *       N       S|       -*- -*-                                                  S           S  ", "turn_token": "ce295c93-6fc0-4477-9852-cb75e878e0ae", "game_id": "53ba8d7e-dafe-11ec-aef0-7ecdf393f9cc"}}
+        actual = move(request_data)
+        esperado = (1,4),(2,4)
         self.assertEqual(actual,esperado)
 class quoridor_mindistop(unittest.TestCase): 
     def test_mindistop1(self):

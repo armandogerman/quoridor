@@ -68,6 +68,7 @@ def mindist(request_data): # dice cual pieza ALIADA tiene el camino mas corto de
                 break
             j+=1
         i+=1
+    print("mindinst", pcs,pci)
     if pcs[0]<=pcs[1] and pcs[0]<=pcs[2]:
         return pci[0]
     elif pcs[1]<=pcs[0] and pcs[1]<=pcs[2]:
@@ -102,10 +103,11 @@ def wallstop(request_data):
     positionenemy=position(enemy)
     a=int(positionenemy[0])
     b=int(positionenemy[1])
+    print("wallstop",positionenemy,enemy)
     if request_data['data']['side']=="S":
-        return (a-1,b,"h")
-    if request_data['data']['side']=="N":
         return (a+1,b,"h")
+    if request_data['data']['side']=="N":
+        return (a-1,b,"h")
 def movepc(request_data,pc):
     if request_data['data']['side']=="N":
         if pawnmovedown(request_data,pc) != None:
@@ -140,3 +142,9 @@ def move(request_data):
     pc=mindist(request_data)
     fromto=movepc(request_data,pc)
     return fromto
+
+request_data={"event": "your_turn", "data": {"remaining_moves": 164.0, "score_1": -19.0, "player_1": "armandogerman@hotmail.com", "score_2": -45.0, "side": "N", "player_2": "armandogerman@hotmail.com", "walls": 7.0, "board": "         N     N                            |         -*- -*-*                | |                *-*-       |     |       -*-*                |   |                *       N       S|       -*- -*-                                                  S           S  ", "turn_token": "ce295c93-6fc0-4477-9852-cb75e878e0ae", "game_id": "53ba8d7e-dafe-11ec-aef0-7ecdf393f9cc"}}
+prt(request_data)
+# move(request_data)
+mindist(request_data)
+
