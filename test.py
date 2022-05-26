@@ -52,6 +52,10 @@ class quoridor_position(unittest.TestCase):
         actual = position(208)
         esperado = ((6, 2))
         self.assertEqual(actual,esperado)
+    def test_position12(self):
+        actual = position(16)
+        esperado = ((0, 8))
+        self.assertEqual(actual,esperado)
 class quoridor_pawnmovedown(unittest.TestCase):
     def test_pawnmovedown1(self):
         request_data={"event": "your_turn", "data": {"walls": 10.0, "score_1": 0.0, "remaining_moves": 200.0, "player_1": "armandogerman@hotmail.com", "side": "N", "score_2": 0.0, "board": "  N     N     N                                                                                                                                                                                                                                                                   S     S     S  ", "player_2": "armandogerman@hotmail.com", "turn_token": "59ac08e3-bdf9-4787-82ed-b9b49b304a9e", "game_id": "eb6b710a-d695-11ec-aef0-7ecdf393f9cc"}}
@@ -107,13 +111,11 @@ class quoridor_wallstop(unittest.TestCase):
         actual = wallstop(request_data)
         esperado = (1,1,"h")
         self.assertEqual(actual,esperado)
-class quoridor_wallstop(unittest.TestCase): 
     def test_wallstop2(self):
         request_data={"event": "your_turn", "data": {"walls": 10.0, "score_1": 0.0, "remaining_moves": 200.0, "player_1": "armandogerman@hotmail.com", "side": "N", "score_2": 0.0, "board": "  N     N     N                                                                                                                                                                                                                                                                   S     S     S  ", "player_2": "armandogerman@hotmail.com", "turn_token": "59ac08e3-bdf9-4787-82ed-b9b49b304a9e", "game_id": "eb6b710a-d695-11ec-aef0-7ecdf393f9cc"}}
         actual = wallstop(request_data)
         esperado = (7,1,"h")
         self.assertEqual(actual,esperado)
-class quoridor_wallstop(unittest.TestCase): 
     def test_wallstop3(self):
         request_data={"event": "your_turn", "data": {"walls": 9.0, "side": "N", "score_2": -50.0, "score_1": -25.0, "board": "  N           N                           N                                                                                                                          -*-                                                                                                          S     S     S  ", "remaining_moves": 190.0, "player_2": "dani.fredrikson@gmail.com", "player_1": "armandogerman@hotmail.com", "turn_token": "65d2a9de-e739-43b3-9006-b13e20328b80", "game_id": "05053532-d7d2-11ec-aef0-7ecdf393f9cc"}}
         actual = wallstop(request_data)
@@ -178,10 +180,42 @@ class quoridor_move(unittest.TestCase):
         esperado = (1,4),(2,4)
         self.assertEqual(actual,esperado)
     def test_move10(self):
-        request_data={"event": "your_turn", "data": {"remaining_moves": 164.0, "score_1": -19.0, "player_1": "armandogerman@hotmail.com", "score_2": -45.0, "side": "N", "player_2": "armandogerman@hotmail.com", "walls": 7.0, "board": "         N     N                            |         -*- -*-*                | |                *-*-       |     |       -*-*                |   |                *       N       S|       -*- -*-                                                  S           S  ", "turn_token": "ce295c93-6fc0-4477-9852-cb75e878e0ae", "game_id": "53ba8d7e-dafe-11ec-aef0-7ecdf393f9cc"}}
+        request_data={"event": "your_turn", "data": {"side": "S", "score_1": 1508.0, "walls": 10.0, "board": "        N     N                           S                                                                                                                                                                                                     N                                         S   S  ", "player_2": "armandogerman@hotmail.com", "remaining_moves": 170.0, "player_1": "armandogerman@hotmail.com", "score_2": 1482.0, "turn_token": "1a432ad0-fdd2-4a36-823b-5481b18428af", "game_id": "6ff9cf22-dc20-11ec-aef0-7ecdf393f9cc"}}
         actual = move(request_data)
-        esperado = (1,4),(2,4)
+        esperado = (1,4),(0,3)
         self.assertEqual(actual,esperado)
+    def test_move11(self):
+        request_data={"event": "your_turn", "data": {"board": "            N N                               S                                                                                                                                                               N                                                                               S S", "score_1": 3870.0, "side": "S", "remaining_moves": 141.0, "player_2": "armandogerman@hotmail.com", "player_1": "armandogerman@hotmail.com", "walls": 10.0, "score_2": 3998.0, "turn_token": "b196b770-1986-401f-8b62-ceb73d5370b7", "game_id": "9a48fc0e-dc29-11ec-aef0-7ecdf393f9cc"}}        
+        actual = move(request_data)
+        esperado = (1,6),(0,5)
+        self.assertEqual(actual,esperado)
+    def test_move12(self):
+        request_data={"event": "your_turn", "data": {"side": "N", "player_1": "armandogerman@hotmail.com", "remaining_moves": 170.0, "player_2": "armandogerman@hotmail.com", "board": "              N N                                                                                                                                                                                                                                     N                           S     S     S  ", "score_2": 2492.0, "walls": 10.0, "score_1": 1508.0, "turn_token": "27aac30f-518e-452e-8e0a-b31b21f28dd7", "game_id": "6254d0f4-dc3b-11ec-aef0-7ecdf393f9cc"}}
+        actual = move(request_data)
+        esperado = (7,4),(8,5)
+        self.assertEqual(actual,esperado)
+    def test_move13(self): #tendria que saltar la S. despues se queda encerrado.
+        request_data={"event": "your_turn", "data": {"side": "N", "score_2": 5517.0, "board": "  N N              -*-              S                      -*-          S     S N                -*-                                                           -*-                                                                                                 -*-                           ", "player_1": "armandogerman@hotmail.com", "score_1": 8654.0, "walls": 10.0, "player_2": "mamerida2013@gmail.com", "remaining_moves": 66.0, "turn_token": "166bc6a3-8982-414c-ae97-51d2d9b742f8", "game_id": "5243783e-dc43-11ec-aef0-7ecdf393f9cc"}}
+        actual = move(request_data)
+        esperado = (2,6),(2,7)
+        self.assertEqual(actual,esperado)
+    def test_move14(self): #ponen una pared y se va a la izquierda. ahi muere (pawns4) pawnmoveleft S ((4, 0), None)
+        request_data={"event": "your_turn", "data": {"board": "  N     N                                                                                                              -*-                S           N                                                                                                                                 S     S  ", "walls": 10.0, "player_1": "matiasbertani@gmail.com", "player_2": "armandogerman@hotmail.com", "score_2": 30.0, "remaining_moves": 191.0, "score_1": 33.0, "side": "S", "turn_token": "db1526f4-66f3-4928-a97f-2b7ab06b7465", "game_id": "e9fa3fc4-dc4c-11ec-aef0-7ecdf393f9cc"}}
+        actual = move(request_data)
+        esperado = (4,1),(4,2)
+        self.assertEqual(actual,esperado)
+    def test_move15(self): #No salta para ganar pawnmovedown N ((7, 1), (8, 2))
+        request_data={"event": "your_turn", "data": {"side": "N", "player_1": "armandogerman@hotmail.com", "walls": 10.0, "score_1": 254.0, "board": "        N     N                                 S                                                                                                                                                                                               N                                 S     S        ", "score_2": 254.0, "remaining_moves": 186.0, "player_2": "nahuel9567@gmail.com", "turn_token": "5c15d2cc-f161-40e5-b186-38636c4fd680", "game_id": "87a4d4f2-dc50-11ec-aef0-7ecdf393f9cc"}}
+        actual = move(request_data)
+        esperado = (7,1),(8,2)
+        self.assertEqual(actual,esperado)
+    def test_move16(self): #esta encerrado. sube uno y despues se cuelga. deberia arrancar otro peon. pawns4
+        request_data={"event": "your_turn", "data": {"side": "N", "score_2": 10325.0, "player_2": "pablogg011@gmail.com", "score_1": 3242.0, "remaining_moves": 16.0, "board": "        N     N                             S                                                          |N|              * *              | |             -*-                                                                                                                                S S  ", "player_1": "armandogerman@hotmail.com", "walls": 10.0, "turn_token": "40447da0-5225-4096-a524-774532bbb0fd", "game_id": "9a7b043e-dc55-11ec-aef0-7ecdf393f9cc"}}
+        actual = move(request_data)
+        esperado = (0,4),(1,4)
+        self.assertEqual(actual,esperado)
+
+        
 class quoridor_mindistop(unittest.TestCase): 
     def test_mindistop1(self):
         request_data={"event": "your_turn", "data": {"walls": 10.0, "score_1": 0.0, "remaining_moves": 200.0, "player_1": "armandogerman@hotmail.com", "side": "N", "score_2": 0.0, "board": "  N     N     N                                                                                                                                                                                                                                                                   S     S     S  ", "player_2": "armandogerman@hotmail.com", "turn_token": "59ac08e3-bdf9-4787-82ed-b9b49b304a9e", "game_id": "eb6b710a-d695-11ec-aef0-7ecdf393f9cc"}}
