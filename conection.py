@@ -17,7 +17,6 @@ async def send(websocket, action, data):
     print(message)
     await websocket.send(message)
 
-
 async def start(auth_token):
     uri = "wss://4yyity02md.execute-api.us-east-1.amazonaws.com/ws?token={}".format(auth_token)
     while True:
@@ -31,7 +30,6 @@ async def start(auth_token):
         except Exception:
             print('connection error!')
             time.sleep(3)
-
 
 async def play(websocket):
     while True:
@@ -61,17 +59,15 @@ async def play(websocket):
             print('error {}'.format(str(e)))
             break  # force login again
 
-
 async def process_your_turn(websocket, request_data):
     prt(request_data)
     # if request_data["data"]["walls"]>0:
-    #     if randint(0, 4) >= 3:
+    #     if randint(0, 8) >= 1:
     #         await process_move(websocket, request_data)
     #     else:
     #         await process_wall(websocket, request_data)
     # else:
     await process_move(websocket, request_data)
-
 
 async def process_move(websocket, request_data):
         fromto=move(request_data)

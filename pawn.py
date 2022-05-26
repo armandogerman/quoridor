@@ -1,6 +1,3 @@
-from tkinter import NW
-
-
 def position(i):
   for j in range(17):
     col = i-(j*34)
@@ -12,72 +9,81 @@ def position(i):
         elif col>0:
           col-=2
           acu+=1
-# def index(j,col):
-#     return j*17+col
 
 def pawnmovedown(request_data,pc):
     s=request_data['data']['side']
-    if pc+17<288:   # 1
-        if request_data['data']['board'][pc+17]=='-' or request_data['data']['board'][pc+17]=='*' or request_data['data']['board'][pc+17]=='|':
-            return None
-    if pc+51<288: # 2
-        if request_data['data']['board'][pc+51]=='-' or request_data['data']['board'][pc+51]=='*' or request_data['data']['board'][pc+51]=='|':
-            return None  
-    if pc+34<288: # 3 4 y 5 
-        if request_data['data']['board'][pc+34]==' ':
-            return position(pc), position(pc+34)
-        elif request_data['data']['board'][pc+34]!=s:
-            if pc+68<288:
-                if request_data['data']['board'][pc+68]==' ':
-                    return position(pc), position(pc+68)
-            if pc+36<288:
-                if request_data['data']['board'][pc+36]==' ':
+    pdb=request_data['data']['board']
+    if pc+17<=288:
+        if pdb[pc+17]=='-' or pdb[pc+17]=='*' or pdb[pc+17]=='|':   return None
+    if pc+51<=288:
+        if pdb[pc+51]=='-' or pdb[pc+51]=='*' or pdb[pc+51]=='|':   return None  
+    if pc+34<=288:
+        if pdb[pc+34]==' ':                 return position(pc), position(pc+34)
+        elif pdb[pc+34]!=s:
+            if pc+68<=288:
+                if pdb[pc+68]==' ':         return position(pc), position(pc+68)
+            if pc+36<=288:
+                if pdb[pc+36]==' ':
                     a=position(pc)
                     b=position(pc+36)
-                    if a[1]==b[1]+1 or a[1]==b[1]-1:
-                        return a, b    #5.r)
-            if pc+32<288:               
-                if request_data['data']['board'][pc+32]==' ':
+                    if a[1]==b[1]+1 or a[1]==b[1]-1:                return a, b
+            if pc+32<=288:               
+                if pdb[pc+32]==' ':
                     a=position(pc)
                     b=position(pc+32)
-                    if a[1]==b[1]+1 or a[1]==b[1]-1:
-                        return a, b    #5.l)
-
+                    if a[1]==b[1]+1 or a[1]==b[1]-1:                return a, b
 
 def pawnmoveleft(request_data,pc):
-    if request_data['data']['board'][pc] == request_data['data']['side']:
-        if request_data['data']['board'][pc+1] != '|': 
-            if request_data['data']['board'][pc-2] == ' ':
-                if request_data['data']['side']=='S':
-                    if request_data['data']['board'][pc-19]==' ':
-                        return position(pc), position(pc-2)
-                elif request_data['data']['side']=='N':
-                    if request_data['data']['board'][pc+19]==' ':
-                        return position(pc), position(pc-2)
+    rdb=request_data['data']['board']
+    rds=request_data['data']['side']
+    if rdb[pc-1] != '|': 
+        if rdb[pc-2] == ' ':
+            if rds=='S':
+                if position(pc-2)==None:    return None
+                if rdb[pc-19]==' ':         return position(pc), position(pc-2)
+            elif rds=='N':
+                if position(pc-2)==None:    return None
+                if rdb[pc+19]==' ':         return position(pc), position(pc-2)
+    if rdb[pc-1] == '|':
+        return None
 
 def pawnmoveright(request_data,pc):
-    if request_data['data']['board'][pc] == request_data['data']['side']:
-        if request_data['data']['board'][pc+1] != '|': 
-            if request_data['data']['board'][pc+2] == ' ':
-                if request_data['data']['side']=='S':
-                    if request_data['data']['board'][pc-15]==' ':
-                        return position(pc), position(pc+2)
-                elif request_data['data']['side']=='N':
-                    if request_data['data']['board'][pc+15]==' ':
-                        return position(pc), position(pc+2)
+    rdb=request_data['data']['board']
+    rds=request_data['data']['side']
+    if rdb[pc+1] != '|': 
+        if rdb[pc+2] == ' ':
+            if rds=='S':
+                if position(pc+2)==None:    return None
+                if rdb[pc-15]==' ':         return position(pc), position(pc+2)
+            elif rds=='N':
+                if position(pc+2)==None:    return None
+                if rdb[pc+19]==' ':         return position(pc), position(pc+2)
+    if rdb[pc-1] == '|':
+        return None
 
 def pawnmoveup(request_data,pc):
-    if request_data['data']['board'][pc-17] == '-'and pc>=17:
-        return None
-    elif request_data['data']['board'][pc-34] == ' 'and pc>=34:
-        return position(pc), position(pc-34)
-    elif request_data['data']['board'][pc-34] != request_data['data']['side'] and pc>=34:
-        if request_data['data']['board'][pc-68] == ' ' and pc>=68:
-            return position(pc), position(pc-68)
-        elif pc<=50 and request_data['data']['board'][pc-36] == ' ' and  pc-36>=0:
-            return position(pc), position(pc-36)
-        elif pc<=50 and request_data['data']['board'][pc-32] == ' ' and  pc-32>=0:
-            return position(pc), position(pc-32)
+    rdb=request_data['data']['board']
+    s=request_data['data']['side']
+    if pc-34>=0:
+        if rdb[pc-17]=='-' or rdb[pc-17]=='*' or rdb[pc-17]=='|':   return None
+        if rdb[pc-17]==' ' and rdb[pc-34]==' ': return position(pc), position(pc-34)
+    if pc-34>=0:
+        if rdb[pc-34]==' ':                 return position(pc), position(pc-34)
+        elif rdb[pc-34]!=s:
+            if pc-68>=0:
+                if rdb[pc-68]==' ':         return position(pc), position(pc-68)
+            if pc-36>=0:
+                if rdb[pc-36]==' ':
+                    a=position(pc)
+                    b=position(pc-36)
+                    if a[1]==b[1]+1 or a[1]==b[1]-1:                return a, b
+            if pc-32>=0:               
+                if rdb[pc-32]==' ':
+                    a=position(pc)
+                    b=position(pc-32)
+                    if a[1]==b[1]+1 or a[1]==b[1]-1:                return a, b
+    if pc-51>=0: # 2
+        if rdb[pc-51]=='-' or rdb[pc-51]=='*' or rdb[pc-51]=='|':   return None
 
 def movepc(request_data,pc):
     if request_data['data']['side']=="N":
@@ -109,10 +115,3 @@ def movepc(request_data,pc):
         elif pawnmovedown(request_data,pc) != None:
             print("pawnmovedown S",pawnmovedown(request_data,pc))
             return pawnmovedown(request_data,pc)
-
-# for i in range(17):
-#     for j in range(17):
-#         print("index",index(i,j),"i",i,"j",j)
-
-# request_data={"event": "your_turn", "data": {"side": "N", "score_2": 5517.0, "board": "  N N              -*-              S                      -*-          S     S N                -*-                                                           -*-                                                                                                 -*-                           ", "player_1": "armandogerman@hotmail.com", "score_1": 8654.0, "walls": 10.0, "player_2": "mamerida2013@gmail.com", "remaining_moves": 66.0, "turn_token": "166bc6a3-8982-414c-ae97-51d2d9b742f8", "game_id": "5243783e-dc43-11ec-aef0-7ecdf393f9cc"}}
-# print(pawnmovedown(request_data,80))

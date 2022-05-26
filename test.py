@@ -56,6 +56,10 @@ class quoridor_position(unittest.TestCase):
         actual = position(16)
         esperado = ((0, 8))
         self.assertEqual(actual,esperado)
+    def test_position13(self):
+        actual = position(118)
+        esperado = ((3, 8))
+        self.assertEqual(actual,esperado)
 class quoridor_pawnmovedown(unittest.TestCase):
     def test_pawnmovedown1(self):
         request_data={"event": "your_turn", "data": {"walls": 10.0, "score_1": 0.0, "remaining_moves": 200.0, "player_1": "armandogerman@hotmail.com", "side": "N", "score_2": 0.0, "board": "  N     N     N                                                                                                                                                                                                                                                                   S     S     S  ", "player_2": "armandogerman@hotmail.com", "turn_token": "59ac08e3-bdf9-4787-82ed-b9b49b304a9e", "game_id": "eb6b710a-d695-11ec-aef0-7ecdf393f9cc"}}
@@ -197,7 +201,7 @@ class quoridor_move(unittest.TestCase):
     def test_move13(self): #tendria que saltar la S. despues se queda encerrado.
         request_data={"event": "your_turn", "data": {"side": "N", "score_2": 5517.0, "board": "  N N              -*-              S                      -*-          S     S N                -*-                                                           -*-                                                                                                 -*-                           ", "player_1": "armandogerman@hotmail.com", "score_1": 8654.0, "walls": 10.0, "player_2": "mamerida2013@gmail.com", "remaining_moves": 66.0, "turn_token": "166bc6a3-8982-414c-ae97-51d2d9b742f8", "game_id": "5243783e-dc43-11ec-aef0-7ecdf393f9cc"}}
         actual = move(request_data)
-        esperado = (2,6),(2,7)
+        esperado = (2, 6), (2, 4)
         self.assertEqual(actual,esperado)
     def test_move14(self): #ponen una pared y se va a la izquierda. ahi muere (pawns4) pawnmoveleft S ((4, 0), None)
         request_data={"event": "your_turn", "data": {"board": "  N     N                                                                                                              -*-                S           N                                                                                                                                 S     S  ", "walls": 10.0, "player_1": "matiasbertani@gmail.com", "player_2": "armandogerman@hotmail.com", "score_2": 30.0, "remaining_moves": 191.0, "score_1": 33.0, "side": "S", "turn_token": "db1526f4-66f3-4928-a97f-2b7ab06b7465", "game_id": "e9fa3fc4-dc4c-11ec-aef0-7ecdf393f9cc"}}
@@ -214,8 +218,12 @@ class quoridor_move(unittest.TestCase):
         actual = move(request_data)
         esperado = (0,4),(1,4)
         self.assertEqual(actual,esperado)
+    # def test_move17(self): #baila sobre la pared.. tendria que ver si puede avanzar 
+    #     request_data={"event": "your_turn", "data": {"score_1": 1284.0, "score_2": 53.0, "board": "        N     N                                                       S                                                                     N              -*-                                                                                                                          S     S  ", "player_1": "armandogerman@hotmail.com", "walls": 10.0, "remaining_moves": 176.0, "side": "N", "player_2": "MAF", "turn_token": "7d7669b4-95d3-4353-a821-1c17a5582df3", "game_id": "384d9c1c-dc8d-11ec-aef0-7ecdf393f9cc"}}
+    #     actual = move(request_data)
+    #     esperado = (4,2),(4,3)
+    #     self.assertEqual(actual,esperado)
 
-        
 class quoridor_mindistop(unittest.TestCase): 
     def test_mindistop1(self):
         request_data={"event": "your_turn", "data": {"walls": 10.0, "score_1": 0.0, "remaining_moves": 200.0, "player_1": "armandogerman@hotmail.com", "side": "N", "score_2": 0.0, "board": "  N     N     N                                                                                                                                                                                                                                                                   S     S     S  ", "player_2": "armandogerman@hotmail.com", "turn_token": "59ac08e3-bdf9-4787-82ed-b9b49b304a9e", "game_id": "eb6b710a-d695-11ec-aef0-7ecdf393f9cc"}}

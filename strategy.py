@@ -1,7 +1,6 @@
 from pawn import *
 from wall import *
 
-
 def distance(request_data,pcs):
     if request_data['data']['side']=="N":
         acu=0
@@ -12,8 +11,9 @@ def distance(request_data,pcs):
                 acu+=2
             elif walldown(request_data,pcs)==3:
                 acu+=6
+            elif walldown(request_data,pcs)==4:
+                acu+=8
             pcs=pcs+34
-            # print("distance","acu",acu,"pcs",pcs)
         return acu
     if request_data['data']['side']=="S":
         acu=0
@@ -24,6 +24,8 @@ def distance(request_data,pcs):
                 acu+=2
             elif wallup(request_data,pcs)==3:
                 acu+=6
+            elif wallup(request_data,pcs)==4:
+                acu+=8
             pcs=pcs-34
         return acu
 def prt(request_data):
@@ -62,17 +64,15 @@ def prt(request_data):
     print("turn_token",turn_token)
     print("game_id",game_id)
     print("---------------------------------------------------------------------")
-def mindist(request_data): # dice cual pieza ALIADA tiene el camino mas corto desde donde estan
+def mindist(request_data):
     i=0
     j=0
     pcs=[0,0,0]
     pci=[0,0,0]
     while i<=288:
-        # print("mindist**i:",i,"j",j,"board",request_data['data']['board'][i],"pcs:",pcs,"pci",pci)
         if request_data['data']['board'][i] == request_data['data']['side']:
             pcs[j]=distance(request_data,i)
             pci[j]=i
-            # print("mindinst", pcs,pci)
             if j==2:
                 break
             j+=1
@@ -116,7 +116,7 @@ def move(request_data):
     fromto=movepc(request_data,pc)
     return fromto
 # Walls
-def mindistop(request_data): # dice cual pieza ENEMIGA tiene el camino mas corto desde donde estan
+def mindistop(request_data): 
     i=0
     j=0
     pcs=[0,0,0]
@@ -143,23 +143,14 @@ def wallstop(request_data):
     positionenemy=position(enemy)
     a=int(positionenemy[0])
     b=int(positionenemy[1])
-    if request_data['data']['side']=="S":
-        if iswall(request_data,enemy)==1 and positionenemy[1]<8:
-            return (a+1,b,"h")
-        elif iswall(request_data,enemy)==1 and positionenemy[1]==8:
-            return (a+1,b-1,"h")
-    if request_data['data']['side']=="N":
-        if iswall(request_data,enemy)==1 and positionenemy[1]<8:
-            return (a-1,b,"h")
-        elif iswall(request_data,enemy)==1 and positionenemy[1]==8:
-            return (a-1,b-1,"h")
+    rds=request_data['data']['side']
+    if rds=="S":
+        if iswall(request_data,enemy)==1 and positionenemy[1]<8:    return (a+2,b,"h")
+        elif iswall(request_data,enemy)==1 and positionenemy[1]==8: return (a+2,b-1,"h")
+    if rds=="N":
+        if iswall(request_data,enemy)==1 and positionenemy[1]<8:    return (a-2,b,"h")
+        elif iswall(request_data,enemy)==1 and positionenemy[1]==8: return (a-2,b-1,"h")
 def putwall(request_data):
     print("wallstop:",wallstop(request_data))
     return wallstop(request_data)
 
-# request_data={"event": "your_turn", "data": {"player_2": "armandogerman@hotmail.com", "score_1": 0.0, "walls": 10.0, "remaining_moves": 200.0, "side": "N", "player_1": "armandogerman@hotmail.com", "score_2": 0.0, "board": "  N     N     N                                                                                                                                                                                                                                                                   S     S     S  ", "turn_token": "5eedf5f1-e954-40ec-9a62-be87339b0cb1", "game_id": "64da2bec-dc1f-11ec-aef0-7ecdf393f9cc"}}
-# prt(request_data)
-# putwall(request_data)
-request_data={"event": "your_turn", "data": {"side": "N", "score_2": 10325.0, "player_2": "pablogg011@gmail.com", "score_1": 3242.0, "remaining_moves": 16.0, "board": "        N     N                             S                                                          |N|              * *              | |             -*-                                                                                                                                S S  ", "player_1": "armandogerman@hotmail.com", "walls": 10.0, "turn_token": "40447da0-5225-4096-a524-774532bbb0fd", "game_id": "9a7b043e-dc55-11ec-aef0-7ecdf393f9cc"}}
-print(distance(request_data,104))
-prt(request_data)
